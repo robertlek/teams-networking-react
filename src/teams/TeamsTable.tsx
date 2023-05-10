@@ -1,6 +1,22 @@
 import "./style.css";
 
 export function TeamsTable() {
+    const teams = [
+        {
+            id: "qqu6ka1683557400775",
+            promotion: "FastTrackIT",
+            members: "Robert Leca Andrei",
+            name: "JavaScript",
+            url: "https://github.com/robertlek/teams-networking"
+        },
+        {
+            id: "bdw22b1683557416185",
+            promotion: "FastTrackIT",
+            members: "Robert Leca",
+            name: "CSS",
+            url: "https://github.com/robertlek/teams-networking"
+        }
+    ];
     return (
         <form id="edit-form" action="" method="post">
             <table>
@@ -25,7 +41,37 @@ export function TeamsTable() {
                     </tr>
                 </thead>
 
-                <tbody></tbody>
+                <tbody>
+                    {teams.map(({ id, url, promotion, members, name }) => {
+                        let displayURL = url;
+                        if (url.startsWith("https://")) {
+                            displayURL = url.substring(8);
+                        }
+                        return (
+                            <tr key={id}>
+                                <td>
+                                    <input type="checkbox" name="selected" value={id} />
+                                </td>
+                                <td>{promotion}</td>
+                                <td>{members}</td>
+                                <td>{name}</td>
+                                <td>
+                                    <a href="${url}" target="_blank">
+                                        {displayURL}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a data-id={id} className="link-btn remove-btn">
+                                        ✖
+                                    </a>
+                                    <a data-id={id} className="link-btn edit-btn">
+                                        &#9998;
+                                    </a>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
 
                 <tfoot>
                     <tr>
