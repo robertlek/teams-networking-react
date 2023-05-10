@@ -14,9 +14,9 @@ export function MainMenu() {
                 </button>
             </li>
             <li>
-                <button type="button" id="projects-button" data-tab="projects">
+                <button type="button" id="projects-button" data-tab="teams">
                     <i className="fa-solid fa-briefcase margin-right-md"></i>
-                    <span id="text-projects-button">Projects</span>
+                    <span id="text-projects-button">Teams</span>
                 </button>
             </li>
             <li>
