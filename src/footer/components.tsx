@@ -3,7 +3,7 @@ export function AppFooter() {
         <footer id="footer">
             <ul>
                 <li>
-                    <a href="https://github.com/RobertLek" target="_blank">
+                    <a href="https://github.com/robertlek" target="_blank">
                         <i className="fa-brands fa-github margin-right-lg"></i>GitHub
                     </a>
                 </li>
