@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { getTeamsRequest } from "./middleware";
+import { deleteTeamRequest, getTeamsRequest } from "./middleware";
 
 type Team = {
     id: string;
@@ -15,7 +15,11 @@ type Props = {
     teams: Team[];
 };
 
-export function TeamsTable(props: Props) {
+type Actions = {
+    deleteTeam(id: string): void;
+};
+
+export function TeamsTable(props: Props & Actions) {
     return (
         <form id="edit-form" action="" method="post" className={props.loading ? "loading-mask" : ""}>
             <table>
@@ -60,12 +64,15 @@ export function TeamsTable(props: Props) {
                                     </a>
                                 </td>
                                 <td>
-                                    <a data-id={id} className="link-btn remove-btn">
+                                    <a
+                                        className="link-btn remove-btn"
+                                        onClick={() => {
+                                            props.deleteTeam(id);
+                                        }}
+                                    >
                                         ✖
                                     </a>
-                                    <a data-id={id} className="link-btn edit-btn">
-                                        &#9998;
-                                    </a>
+                                    <a className="link-btn edit-btn">&#9998;</a>
                                 </td>
                             </tr>
                         );
@@ -122,26 +129,15 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         super(props);
         this.state = {
             loading: true,
-            teams: [
-                {
-                    id: "qqu6ka1683557400775",
-                    promotion: "FastTrackIT",
-                    members: "Robert Leca Andrei",
-                    name: "JavaScript",
-                    url: "https://github.com/robertlek/teams-networking"
-                },
-                {
-                    id: "bdw22b1683557416185",
-                    promotion: "FastTrackIT",
-                    members: "Robert Leca",
-                    name: "CSS",
-                    url: "https://github.com/robertlek/teams-networking"
-                }
-            ]
+            teams: []
         };
     }
 
-    async componentDidMount(): Promise<void> {
+    componentDidMount(): void {
+        this.loadTeams();
+    }
+
+    async loadTeams() {
         const teams = await getTeamsRequest();
 
         this.setState({
@@ -151,6 +147,17 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     }
 
     render() {
-        return <TeamsTable teams={this.state.teams} loading={this.state.loading} />;
+        return (
+            <TeamsTable
+                teams={this.state.teams}
+                loading={this.state.loading}
+                deleteTeam={async teamId => {
+                    console.log("Delete team...", teamId);
+                    const status = await deleteTeamRequest(teamId);
+                    console.warn("status", status);
+                    this.loadTeams();
+                }}
+            />
+        );
     }
 }
