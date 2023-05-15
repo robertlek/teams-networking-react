@@ -1,24 +1,8 @@
 import "./style.css";
 
-export function TeamsTable() {
-    const teams = [
-        {
-            id: "qqu6ka1683557400775",
-            promotion: "FastTrackIT",
-            members: "Robert Leca Andrei",
-            name: "JavaScript",
-            url: "https://github.com/robertlek/teams-networking"
-        },
-        {
-            id: "bdw22b1683557416185",
-            promotion: "FastTrackIT",
-            members: "Robert Leca",
-            name: "CSS",
-            url: "https://github.com/robertlek/teams-networking"
-        }
-    ];
+export function TeamsTable(props) {
     return (
-        <form id="edit-form" action="" method="post">
+        <form id="edit-form" action="" method="post" className={props.loading ? "loading-mask" : ""}>
             <table>
                 <colgroup>
                     <col span={1} style={{ width: "40px" }} />
@@ -42,7 +26,7 @@ export function TeamsTable() {
                 </thead>
 
                 <tbody>
-                    {teams.map(({ id, url, promotion, members, name }) => {
+                    {props.teams.map(({ id, url, promotion, members, name }) => {
                         let displayURL = url;
                         if (url.startsWith("https://")) {
                             displayURL = url.substring(8);
@@ -108,5 +92,36 @@ export function TeamsTable() {
                 </tfoot>
             </table>
         </form>
+    );
+}
+
+export function TeamsTableWrapper() {
+    const teams = [
+        {
+            id: "qqu6ka1683557400775",
+            promotion: "FastTrackIT",
+            members: "Robert Leca Andrei",
+            name: "JavaScript",
+            url: "https://github.com/robertlek/teams-networking"
+        },
+        {
+            id: "bdw22b1683557416185",
+            promotion: "FastTrackIT",
+            members: "Robert Leca",
+            name: "CSS",
+            url: "https://github.com/robertlek/teams-networking"
+        }
+    ];
+
+    return (
+        <>
+            <TeamsTable teams={[]} loading={true} />
+            <br></br>
+            <TeamsTable teams={[]} loading={false} />
+            <br></br>
+            <TeamsTable teams={teams} loading={false} />
+            <br></br>
+            <TeamsTable teams={teams} loading={true} />
+        </>
     );
 }

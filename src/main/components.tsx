@@ -1,5 +1,5 @@
 import { SideMenu } from "../menu/SideMenu";
-import { TeamsTable } from "../teams/TeamsTable";
+import { TeamsTableWrapper } from "../teams/TeamsTable";
 
 export function ContentWrapper() {
     return (
@@ -9,7 +9,7 @@ export function ContentWrapper() {
                 <div className="display-content" id="home"></div>
                 <div className="display-content" id="skills"></div>
                 <div className="display-content" id="teams" style={{ display: "block" }}>
-                    <TeamsTable />
+                    <TeamsTableWrapper />
                 </div>
                 <div className="display-content" id="languages"></div>
             </div>
