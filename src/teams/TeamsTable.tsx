@@ -1,3 +1,4 @@
+import React from "react";
 import "./style.css";
 
 type Team = {
@@ -108,33 +109,62 @@ export function TeamsTable(props: Props) {
     );
 }
 
-export function TeamsTableWrapper() {
-    const teams = [
-        {
-            id: "qqu6ka1683557400775",
-            promotion: "FastTrackIT",
-            members: "Robert Leca Andrei",
-            name: "JavaScript",
-            url: "https://github.com/robertlek/teams-networking"
-        },
-        {
-            id: "bdw22b1683557416185",
-            promotion: "FastTrackIT",
-            members: "Robert Leca",
-            name: "CSS",
-            url: "https://github.com/robertlek/teams-networking"
-        }
-    ];
+type WrapperProps = {};
 
-    return (
-        <>
-            <TeamsTable teams={[]} loading={true} />
-            <br></br>
-            <TeamsTable teams={[]} loading={false} />
-            <br></br>
-            <TeamsTable teams={teams} loading={false} />
-            <br></br>
-            <TeamsTable teams={teams} loading={true} />
-        </>
-    );
+type State = {
+    loading: boolean;
+    teams: Team[];
+};
+
+export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
+    constructor(props: WrapperProps) {
+        super(props);
+        this.state = {
+            loading: true,
+            teams: [
+                {
+                    id: "qqu6ka1683557400775",
+                    promotion: "FastTrackIT",
+                    members: "Robert Leca Andrei",
+                    name: "JavaScript",
+                    url: "https://github.com/robertlek/teams-networking"
+                },
+                {
+                    id: "bdw22b1683557416185",
+                    promotion: "FastTrackIT",
+                    members: "Robert Leca",
+                    name: "CSS",
+                    url: "https://github.com/robertlek/teams-networking"
+                }
+            ]
+        };
+    }
+
+    componentDidMount(): void {
+        setTimeout(() => {
+            this.setState({
+                loading: false,
+                teams: [
+                    {
+                        id: "qqu6ka1683557400775",
+                        promotion: "FastTrackIT",
+                        members: "Robert Leca Andrei",
+                        name: "JavaScript",
+                        url: "https://github.com/robertlek/teams-networking"
+                    },
+                    {
+                        id: "bdw22b1683557416185",
+                        promotion: "FastTrackIT",
+                        members: "Robert Leca",
+                        name: "CSS",
+                        url: "https://github.com/robertlek/teams-networking"
+                    }
+                ]
+            });
+        }, 2000);
+    }
+
+    render() {
+        return <TeamsTable teams={this.state.teams} loading={this.state.loading} />;
+    }
 }
