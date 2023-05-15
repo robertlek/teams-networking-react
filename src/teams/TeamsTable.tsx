@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import { getTeamsRequest } from "./middleware";
 
 type Team = {
     id: string;
@@ -140,28 +141,13 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         };
     }
 
-    componentDidMount(): void {
-        setTimeout(() => {
-            this.setState({
-                loading: false,
-                teams: [
-                    {
-                        id: "qqu6ka1683557400775",
-                        promotion: "FastTrackIT",
-                        members: "Robert Leca Andrei",
-                        name: "JavaScript",
-                        url: "https://github.com/robertlek/teams-networking"
-                    },
-                    {
-                        id: "bdw22b1683557416185",
-                        promotion: "FastTrackIT",
-                        members: "Robert Leca",
-                        name: "CSS",
-                        url: "https://github.com/robertlek/teams-networking"
-                    }
-                ]
-            });
-        }, 2000);
+    async componentDidMount(): Promise<void> {
+        const teams = await getTeamsRequest();
+
+        this.setState({
+            loading: false,
+            teams: teams
+        });
     }
 
     render() {
