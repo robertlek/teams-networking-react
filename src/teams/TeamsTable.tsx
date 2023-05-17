@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { createTeamRequest, deleteTeamRequest, getTeamsRequest } from "./middleware";
+import { createTeamRequest, deleteTeamRequest, getTeamsRequest, updateTeamRequest } from "./middleware";
 
 type Team = {
     id: string;
@@ -35,7 +35,7 @@ export function TeamsTable(props: Props & Actions) {
                 e.preventDefault();
                 props.save();
             }}
-            onReset={e => {
+            onReset={() => {
                 props.resetForm();
             }}
         >
@@ -230,7 +230,13 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                 }}
                 save={async () => {
                     const team = this.state.team;
-                    await createTeamRequest(team);
+
+                    if (team.id) {
+                        await updateTeamRequest(team);
+                    } else {
+                        await createTeamRequest(team);
+                    }
+
                     await this.loadTeams();
                     this.setState({
                         team: getEmptyTeam()
