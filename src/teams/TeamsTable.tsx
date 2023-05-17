@@ -223,7 +223,6 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                     this.loadTeams();
                 }}
                 startEdit={team => {
-                    console.warn("startEdit", team);
                     this.setState({
                         team
                     });
@@ -244,7 +243,6 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                     });
                 }}
                 inputChange={(name: string, value: string) => {
-                    console.warn("%o changed to %o", name, value);
                     this.setState(state => ({
                         team: {
                             ...state.team,
