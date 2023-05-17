@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { deleteTeamRequest, getTeamsRequest } from "./middleware";
+import { createTeamRequest, deleteTeamRequest, getTeamsRequest } from "./middleware";
 
 type Team = {
     id: string;
@@ -114,7 +114,7 @@ export function TeamsTable(props: Props & Actions) {
                                 required
                                 value={props.team.members}
                                 onChange={e => {
-                                    console.warn("changed", e.target.value);
+                                    props.inputChange("members", e.target.value);
                                 }}
                             />
                         </td>
@@ -126,7 +126,7 @@ export function TeamsTable(props: Props & Actions) {
                                 required
                                 value={props.team.name}
                                 onChange={e => {
-                                    console.warn("changed", e.target.value);
+                                    props.inputChange("name", e.target.value);
                                 }}
                             />
                         </td>
@@ -138,7 +138,7 @@ export function TeamsTable(props: Props & Actions) {
                                 required
                                 value={props.team.url}
                                 onChange={e => {
-                                    console.warn("changed", e.target.value);
+                                    props.inputChange("url", e.target.value);
                                 }}
                             />
                         </td>
@@ -169,7 +169,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
             teams: [],
             team: {
                 id: "",
-                name: "a",
+                name: "",
                 promotion: "",
                 members: "",
                 url: ""
@@ -197,22 +197,23 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                 loading={this.state.loading}
                 team={this.state.team}
                 deleteTeam={async teamId => {
-                    console.log("Delete team...", teamId);
-                    const status = await deleteTeamRequest(teamId);
-                    console.warn("status", status);
+                    await deleteTeamRequest(teamId);
                     this.loadTeams();
                 }}
-                save={() => {
-                    console.warn("TODO: pls save");
+                save={async () => {
+                    const team = this.state.team;
+                    await createTeamRequest(team);
+                    this.loadTeams();
                 }}
                 inputChange={(name: string, value: string) => {
                     console.warn("%o changed to %o", name, value);
                     this.setState(state => {
+                        const team = {
+                            ...state.team
+                        };
+                        team[name] = value;
                         return {
-                            team: {
-                                ...state.team,
-                                promotion: value
-                            }
+                            team
                         };
                     });
                 }}
