@@ -13,15 +13,27 @@ type Team = {
 type Props = {
     loading: boolean;
     teams: Team[];
+    team: Team;
 };
 
 type Actions = {
     deleteTeam(id: string): void;
+    save(): void;
+    inputChange(name: string, value: string): void;
 };
 
 export function TeamsTable(props: Props & Actions) {
     return (
-        <form id="edit-form" action="" method="post" className={props.loading ? "loading-mask" : ""}>
+        <form
+            id="edit-form"
+            action=""
+            method="post"
+            className={props.loading ? "loading-mask" : ""}
+            onSubmit={e => {
+                e.preventDefault();
+                props.save();
+            }}
+        >
             <table>
                 <colgroup>
                     <col span={1} style={{ width: "40px" }} />
@@ -83,27 +95,51 @@ export function TeamsTable(props: Props & Actions) {
                     <tr>
                         <td></td>
                         <td>
-                            <input type="text" id="promotion" name="promotion" placeholder={"Promotion"} required />
-                        </td>
-                        <td>
-                            <input type="text" id="members" name="members" placeholder={"Members"} required />
-                        </td>
-                        <td>
                             <input
                                 type="text"
-                                id="project-name"
-                                name="project-name"
-                                placeholder={"Project Name"}
+                                name="promotion"
+                                placeholder={"Promotion"}
                                 required
+                                value={props.team.promotion}
+                                onChange={e => {
+                                    props.inputChange("promotion", e.target.value);
+                                }}
                             />
                         </td>
                         <td>
                             <input
                                 type="text"
-                                id="project-url"
+                                name="members"
+                                placeholder={"Members"}
+                                required
+                                value={props.team.members}
+                                onChange={e => {
+                                    console.warn("changed", e.target.value);
+                                }}
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                name="project-name"
+                                placeholder={"Project Name"}
+                                required
+                                value={props.team.name}
+                                onChange={e => {
+                                    console.warn("changed", e.target.value);
+                                }}
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
                                 name="project-url"
                                 placeholder={"Project URL"}
                                 required
+                                value={props.team.url}
+                                onChange={e => {
+                                    console.warn("changed", e.target.value);
+                                }}
                             />
                         </td>
                         <td>
@@ -122,6 +158,7 @@ type WrapperProps = {};
 type State = {
     loading: boolean;
     teams: Team[];
+    team: Team;
 };
 
 export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
@@ -129,7 +166,14 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         super(props);
         this.state = {
             loading: true,
-            teams: []
+            teams: [],
+            team: {
+                id: "",
+                name: "a",
+                promotion: "",
+                members: "",
+                url: ""
+            }
         };
     }
 
@@ -151,11 +195,26 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
             <TeamsTable
                 teams={this.state.teams}
                 loading={this.state.loading}
+                team={this.state.team}
                 deleteTeam={async teamId => {
                     console.log("Delete team...", teamId);
                     const status = await deleteTeamRequest(teamId);
                     console.warn("status", status);
                     this.loadTeams();
+                }}
+                save={() => {
+                    console.warn("TODO: pls save");
+                }}
+                inputChange={(name: string, value: string) => {
+                    console.warn("%o changed to %o", name, value);
+                    this.setState(state => {
+                        return {
+                            team: {
+                                ...state.team,
+                                promotion: value
+                            }
+                        };
+                    });
                 }}
             />
         );
