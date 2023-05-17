@@ -229,6 +229,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                     });
                 }}
                 save={async () => {
+                    this.setState({ loading: true });
                     const team = this.state.team;
 
                     if (team.id) {
