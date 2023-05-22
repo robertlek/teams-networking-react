@@ -209,6 +209,15 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
         }));
     }
 
+    private inputChange(name: string, value: string) {
+        this.setState(state => ({
+            team: {
+                ...state.team,
+                [name]: value
+            }
+        }));
+    }
+
     render() {
         return (
             <TeamsTable
@@ -220,7 +229,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                         team: getEmptyTeam()
                     });
                 }}
-                deleteTeam={async teamId => {
+                deleteTeam={teamId => {
                     this.deleteTeam(teamId);
                 }}
                 startEdit={team => {
@@ -244,12 +253,7 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                     });
                 }}
                 inputChange={(name: string, value: string) => {
-                    this.setState(state => ({
-                        team: {
-                            ...state.team,
-                            [name]: value
-                        }
-                    }));
+                    this.inputChange(name, value);
                 }}
             />
         );
