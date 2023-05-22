@@ -209,9 +209,9 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     private async deleteTeam(id: string) {
         this.setState({ loading: true });
         await deleteTeamRequest(id);
-        this.setState(() => ({
+        this.setState(state => ({
             loading: false,
-            teams: this.state.teams.filter(team => team.id !== id)
+            teams: state.teams.filter(team => team.id !== id)
         }));
     }
 
@@ -225,18 +225,28 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     }
 
     private async save() {
-        console.warn("before save", this);
         this.setState({ loading: true });
         const team = this.state.team;
 
         if (team.id) {
             await updateTeamRequest(team);
+            this.setState(state => ({
+                teams: state.teams.map(t => {
+                    if (t.id == team.id) {
+                        return { ...team };
+                    }
+                    return t;
+                })
+            }));
         } else {
-            await createTeamRequest(team);
+            const { id } = await createTeamRequest(team);
+            this.setState(state => ({
+                teams: [...state.teams, { ...team, id }]
+            }));
         }
 
-        await this.loadTeams();
         this.setState({
+            loading: false,
             team: getEmptyTeam()
         });
     }
