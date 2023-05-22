@@ -212,8 +212,12 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
                     });
                 }}
                 deleteTeam={async teamId => {
+                    this.setState({ loading: true });
                     await deleteTeamRequest(teamId);
-                    this.loadTeams();
+                    this.setState(() => ({
+                        loading: false,
+                        teams: this.state.teams.filter(team => team.id !== teamId)
+                    }));
                 }}
                 startEdit={team => {
                     this.setState({
