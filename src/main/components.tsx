@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { SideMenu } from "../menu/SideMenu";
 import { TeamsTableWrapper } from "../teams/TeamsTable";
+import { Page } from "./models";
 
-export function ContentWrapper() {
+type Props = {
+    activePage: Page;
+};
+type Actions = {};
+
+export function ContentWrapper(props: Props & Actions) {
     const [search, setSearch] = useState("");
+    const page = props.activePage;
 
     return (
         <section id="container">
             <SideMenu />
             <div id="main-content">
-                <div className="display-content" id="home"></div>
-                <div className="display-content" id="skills"></div>
-                <div className="display-content" id="teams" style={{ display: "block" }}>
+                <div className="display-content" style={{ display: page === "home" ? "block" : "" }}>
+                    Home page.
+                </div>
+                <div className="display-content" style={{ display: page === "skills" ? "block" : "" }}>
+                    Skills page.
+                </div>
+                <div className="display-content" style={{ display: page === "teams" ? "block" : "" }}>
                     <input
                         type="search"
                         placeholder="Search"
@@ -23,7 +34,9 @@ export function ContentWrapper() {
                     <span>🔎 searching {search}</span>
                     <TeamsTableWrapper search={search} />
                 </div>
-                <div className="display-content" id="languages"></div>
+                <div className="display-content" style={{ display: page === "languages" ? "block" : "" }}>
+                    Languages page.
+                </div>
             </div>
         </section>
     );

@@ -1,9 +1,15 @@
+import { Page } from "../main/models";
 import { MainMenu } from "../menu/MainMenu";
 import logo from "./avatar.jpg";
 import ro_flag from "./ro-language.png";
 import en_flag from "./us-language.png";
 
-export default function AppHeader() {
+type Props = {};
+type Actions = {
+    setActive(page: Page): void;
+};
+
+export default function AppHeader(props: Props & Actions) {
     return (
         <header id="header">
             <div id="header-wrapper">
@@ -27,7 +33,7 @@ export default function AppHeader() {
                 </div>
             </div>
 
-            <MainMenu />
+            <MainMenu setActive={props.setActive} />
         </header>
     );
 }
