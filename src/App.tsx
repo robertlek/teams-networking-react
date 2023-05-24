@@ -9,7 +9,7 @@ function App() {
     const [activePage, setActivePage] = useState<Page>("home");
     return (
         <>
-            <Header setActive={setActivePage} />
+            <Header activePage={activePage} setActive={setActivePage} />
             <ContentWrapper activePage={activePage} />
             <AppFooter />
         </>

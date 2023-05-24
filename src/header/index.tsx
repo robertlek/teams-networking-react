@@ -4,7 +4,10 @@ import logo from "./avatar.jpg";
 import ro_flag from "./ro-language.png";
 import en_flag from "./us-language.png";
 
-type Props = {};
+type Props = {
+    activePage: Page;
+};
+
 type Actions = {
     setActive(page: Page): void;
 };
@@ -33,7 +36,7 @@ export default function AppHeader(props: Props & Actions) {
                 </div>
             </div>
 
-            <MainMenu setActive={props.setActive} />
+            <MainMenu activePage={props.activePage} setActive={props.setActive} />
         </header>
     );
 }

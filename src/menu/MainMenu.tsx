@@ -1,17 +1,22 @@
 import { Page } from "../main/models";
 
-type Props = {};
+type Props = {
+    activePage: Page;
+};
+
 type Actions = {
     setActive(page: Page): void;
 };
 
 export function MainMenu(props: Props & Actions) {
+    const active: Page = props.activePage;
     return (
         <ul id="top-menu-bar">
             <li>
                 <button
                     type="button"
                     id="home-button"
+                    className={active === "home" ? "active-button" : ""}
                     onClick={() => {
                         props.setActive("home");
                     }}
@@ -24,6 +29,7 @@ export function MainMenu(props: Props & Actions) {
                 <button
                     type="button"
                     id="skills-button"
+                    className={active === "skills" ? "active-button" : ""}
                     onClick={() => {
                         props.setActive("skills");
                     }}
@@ -36,6 +42,7 @@ export function MainMenu(props: Props & Actions) {
                 <button
                     type="button"
                     id="projects-button"
+                    className={active === "teams" ? "active-button" : ""}
                     onClick={() => {
                         props.setActive("teams");
                     }}
@@ -48,6 +55,7 @@ export function MainMenu(props: Props & Actions) {
                 <button
                     type="button"
                     id="languages-button"
+                    className={active === "languages" ? "active-button" : ""}
                     onClick={() => {
                         props.setActive("languages");
                     }}
