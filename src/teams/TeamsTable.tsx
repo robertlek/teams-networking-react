@@ -159,7 +159,9 @@ export function TeamsTable(props: Props & Actions) {
     );
 }
 
-type WrapperProps = {};
+type WrapperProps = {
+    search: string;
+};
 
 type State = {
     loading: boolean;
@@ -258,9 +260,18 @@ export class TeamsTableWrapper extends React.Component<WrapperProps, State> {
     }
 
     render() {
+        const search = this.props.search;
+        const teams = this.state.teams.filter(
+            team =>
+                team.promotion.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+                team.members.toLowerCase().includes(search.toLocaleLowerCase()) ||
+                team.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
+                team.url.toLowerCase().includes(search.toLocaleLowerCase())
+        );
+
         return (
             <TeamsTable
-                teams={this.state.teams}
+                teams={teams}
                 loading={this.state.loading}
                 team={this.state.team}
                 resetForm={this.reset}

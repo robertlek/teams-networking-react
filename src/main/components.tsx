@@ -3,7 +3,7 @@ import { SideMenu } from "../menu/SideMenu";
 import { TeamsTableWrapper } from "../teams/TeamsTable";
 
 export function ContentWrapper() {
-    const [search, setSearch] = useState("JS");
+    const [search, setSearch] = useState("");
 
     return (
         <section id="container">
@@ -21,7 +21,7 @@ export function ContentWrapper() {
                         }}
                     />
                     <span>🔎 searching {search}</span>
-                    <TeamsTableWrapper />
+                    <TeamsTableWrapper search={search} />
                 </div>
                 <div className="display-content" id="languages"></div>
             </div>
