@@ -29,13 +29,13 @@ export function MainMenu(props: Props & Actions) {
                 <button
                     type="button"
                     id="skills-button"
-                    className={active === "skills" ? "active-button" : ""}
+                    className={active === "todos" ? "active-button" : ""}
                     onClick={() => {
-                        props.setActive("skills");
+                        props.setActive("todos");
                     }}
                 >
                     <i className="fa-solid fa-gear margin-right-md"></i>
-                    <span id="text-skills-button">Skills</span>
+                    <span id="text-skills-button">To Dos</span>
                 </button>
             </li>
             <li>

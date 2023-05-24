@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SideMenu } from "../menu/SideMenu";
 import { TeamsTableWrapper } from "../teams/TeamsTable";
 import { Page } from "./models";
+import { TodosApp } from "../todos/components";
 
 type Props = {
     activePage: Page;
@@ -19,8 +20,8 @@ export function ContentWrapper(props: Props & Actions) {
                 <div className="display-content" style={{ display: page === "home" ? "block" : "" }}>
                     Home page.
                 </div>
-                <div className="display-content" style={{ display: page === "skills" ? "block" : "" }}>
-                    Skills page.
+                <div className="display-content" style={{ display: page === "todos" ? "block" : "" }}>
+                    <TodosApp />
                 </div>
                 <div className="display-content" style={{ display: page === "teams" ? "block" : "" }}>
                     <input
